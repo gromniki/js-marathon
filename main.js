@@ -1,4 +1,5 @@
 const btn = document.querySelector('#btn-kick');
+const btnKickEnemy = document.querySelector('#btn-kick-enemy');
 
 const character = {
   name: 'Pikachu',
@@ -18,13 +19,14 @@ const enemy = {
 
 function init() {
   console.log('Start Game!');
-
-  renderHP(character);
-  renderHP(enemy);
   
   btn.addEventListener('click', function () {
-    console.log('Kick');
+    console.log('Kick Pikachu');
     changeHP(random(20), character);
+  });
+
+  btnKickEnemy.addEventListener('click', function () {
+    console.log('Kick Enemy');
     changeHP(random(20), enemy);
   });
 }
@@ -47,11 +49,12 @@ function renderProgressBarHP(person) {
 function changeHP(count, person) {
   if (person.damageHP < count) {
     person.damageHP = 0;
-    alert('Бедный ' + person.name + ' потерпел поражение');
+    alert('Бедный ' + person.name + ' потерпел поражение!');
     btn.disabled = true;
   } else {
     person.damageHP -= count;
   }
+
   renderHP(person);
 }
 
