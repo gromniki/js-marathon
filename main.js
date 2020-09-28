@@ -1,32 +1,63 @@
-'use strict';
+const btn = document.querySelector('#btn-kick');
+const btnKickEnemy = document.querySelector('#btn-kick-enemy');
 
-const firstRow = prompt('Введите первую строку');
-const secondRow = prompt('Введите вторую строку');
-const char = prompt('По какой букве будем считать?');
-
-function countLetters(row, char) {
-  let counter = 0;
-
-  for (let i = 0; i < row.length; i++) {
-    if (row.charAt(i) === char || row.charAt(i) === 'a' || row.charAt(i) === 'A') {
-      counter += 1;
-    }
-  }
-
-  return counter;
+const character = {
+  name: 'Pikachu',
+  defaultHP: 100,
+  damageHP: 100,
+  elHP: document.querySelector('#health-character'),
+  elProgressBar: document.querySelector('#progressbar-character')
 }
 
-function getRow(firstRow, secondRow) {
-  let numberLettersFirstRow = countLetters(firstRow, char);
-  let numberLettersSecondRow = countLetters(secondRow, char);
+const enemy = {
+  name: 'Charmander',
+  defaultHP: 100,
+  damageHP: 100,
+  elHP: document.querySelector('#health-enemy'),
+  elProgressBar: document.querySelector('#progressbar-enemy')
+}
 
-  if (numberLettersFirstRow > numberLettersSecondRow) {
-    return firstRow;
-  } else if (numberLettersFirstRow === numberLettersSecondRow) {
-    return 'Одинаковое количество букв в двух строках';
+function init() {
+  console.log('Start Game!');
+  
+  btn.addEventListener('click', function () {
+    console.log('Kick Pikachu');
+    changeHP(random(20), character);
+  });
+
+  btnKickEnemy.addEventListener('click', function () {
+    console.log('Kick Enemy');
+    changeHP(random(20), enemy);
+  });
+}
+
+init();
+
+function renderHP(person) {
+  renderHPLife(person);
+  renderProgressBarHP(person);
+}
+
+function renderHPLife(person) {
+  person.elHP.textContent = person.damageHP + ' / ' + person.defaultHP;
+}
+
+function renderProgressBarHP(person) {
+  person.elProgressBar.style.width = person.damageHP + '%';
+}
+
+function changeHP(count, person) {
+  if (person.damageHP < count) {
+    person.damageHP = 0;
+    alert('Бедный ' + person.name + ' потерпел поражение!');
+    btn.disabled = true;
   } else {
-    return secondRow;
+    person.damageHP -= count;
   }
+
+  renderHP(person);
 }
 
-alert(getRow(firstRow, secondRow));
+function random(num) {
+  return Math.ceil(Math.random() * num);
+}
