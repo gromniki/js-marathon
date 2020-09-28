@@ -9,6 +9,7 @@ const character = {
   elProgressBar: document.querySelector('#progressbar-character'),
   renderHPLife: renderHPLife,
   renderProgressBarHP: renderProgressBarHP,
+  changeHP: changeHP,
 }
 
 const enemy = {
@@ -17,7 +18,9 @@ const enemy = {
   damageHP: 90,
   elHP: document.querySelector('#health-enemy'),
   elProgressBar: document.querySelector('#progressbar-enemy'),
-  changeHP: changeHP(random(20)),
+  renderHPLife: renderHPLife,
+  renderProgressBarHP: renderProgressBarHP,
+  changeHP: changeHP,
 }
 
 function init() {
@@ -25,33 +28,24 @@ function init() {
   
   btn.addEventListener('click', function () {
     console.log('Kick Pikachu');
-    changeHP(random(20));
+    character.changeHP(random(20));
   });
 
   btnKickEnemy.addEventListener('click', function () {
     console.log('Kick Enemy');
-    changeHP(random(20));
+    enemy.changeHP(random(20));
   });
 }
 
 init();
 
-function renderHP() {
-  //renderHPLife(this);
-  //renderProgressBarHP(person);
-}
-
 function renderHPLife() {
   this.elHP.textContent = this.damageHP + ' / ' + this.defaultHP;
 }
 
-
-
 function renderProgressBarHP() {
   this.elProgressBar.style.width = this.damageHP + '%';
 }
-
-
 
 function changeHP(count) {
   if (this.damageHP < count) {
@@ -62,37 +56,10 @@ function changeHP(count) {
     this.damageHP -= count;
   }
 
-  character.renderHPLife();
-  enemy.renderHPLife();
-  character.renderProgressBarHP();
-  enemy.renderProgressBarHP();
+  this.renderHPLife();
+  this.renderProgressBarHP();
 }
 
 function random(num) {
   return Math.ceil(Math.random() * num);
 }
-
-// function renderHP(person) {
-//   renderHPLife(person);
-//   renderProgressBarHP(person);
-// }
-
-// function renderHPLife(person) {
-//   person.elHP.textContent = person.damageHP + ' / ' + person.defaultHP;
-// }
-
-// function renderProgressBarHP(person) {
-//   person.elProgressBar.style.width = person.damageHP + '%';
-// }
-
-// function changeHP(count, person) {
-//   if (person.damageHP < count) {
-//     person.damageHP = 0;
-//     alert('Бедный ' + person.name + ' потерпел поражение!');
-//     btn.disabled = true;
-//   } else {
-//     person.damageHP -= count;
-//   }
-
-//   renderHP(person);
-// }
