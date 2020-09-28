@@ -17,8 +17,7 @@ const enemy = {
   damageHP: 90,
   elHP: document.querySelector('#health-enemy'),
   elProgressBar: document.querySelector('#progressbar-enemy'),
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
+  changeHP: changeHP(random(20)),
 }
 
 function init() {
@@ -69,7 +68,9 @@ function changeHP(count) {
   enemy.renderProgressBarHP();
 }
 
-
+function random(num) {
+  return Math.ceil(Math.random() * num);
+}
 
 // function renderHP(person) {
 //   renderHPLife(person);
@@ -95,7 +96,3 @@ function changeHP(count) {
 
 //   renderHP(person);
 // }
-
-function random(num) {
-  return Math.ceil(Math.random() * num);
-}
