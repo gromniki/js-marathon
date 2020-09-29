@@ -7,11 +7,11 @@ const character = {
   damageHP: 150,
   elHP: document.querySelector('#health-character'),
   elProgressBar: document.querySelector('#progressbar-character'),
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-  damageLevel: damageLevel,
-  renderHP: renderHP,
-  changeHP: changeHP,
+  renderHPLife,
+  renderProgressBarHP,
+  damageLevel,
+  renderHP,
+  changeHP,
 }
 
 const enemy = {
@@ -20,11 +20,11 @@ const enemy = {
   damageHP: 150,
   elHP: document.querySelector('#health-enemy'),
   elProgressBar: document.querySelector('#progressbar-enemy'),
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-  damageLevel: damageLevel,
-  renderHP: renderHP,
-  changeHP: changeHP,
+  renderHPLife,
+  renderProgressBarHP,
+  damageLevel,
+  renderHP,
+  changeHP,
 }
 
 function startGame() {
