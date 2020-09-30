@@ -37,12 +37,12 @@ function startGame() {
   renderHP.apply(enemy);
   
   $btn.addEventListener('click', function () {
-    console.log('Kick Pikachu!');
+    //console.log('Kick Pikachu!');
     character.changeHP(random(20));
   });
 
   $btnKickEnemy.addEventListener('click', function () {
-    console.log('Kick Enemy!');
+    //console.log('Kick Enemy!');
     enemy.changeHP(random(20));
   });
 }
@@ -59,15 +59,24 @@ function renderHPLife() {
 }
 
 function renderProgressBarHP() {
-  this.elProgressBar.style.width = this.damageLevel() + '%';
+  let { elProgressBar, damageLevel } = this;
+  console.log(elProgressBar.style.width, damageLevel());
+  elProgressBar.style.width = damageLevel() + '%';
 }
 
 function damageLevel() {
-  return this.damageHP > 100 ? this.damageHP = 100 : Math.floor(this.damageHP / this.defaultHP * 100);
+  let { damageHP, defaultHP } = this;
+  console.log(damageHP, defaultHP);
+  return damageHP > 100 ? damageHP = 100 : Math.floor(damageHP / defaultHP * 100);
+  //return this.damageHP > 100 ? this.damageHP = 100 : Math.floor(this.damageHP / this.defaultHP * 100);
 }
 
 function changeHP(count) {
   this.damageHP -= count;
+
+  const log = this === enemy ? generateLog(this, character) : generateLog(this, enemy);
+  console.log(log);
+  //console.log(generateLog);
 
   if (this.damageHP <= 0) {
     this.damageHP = 0;
@@ -86,17 +95,17 @@ function random(max, min = 0) {
 
 function generateLog(firstPerson, secondPerson) {
   const logs = [
-    '[ПЕРСОНАЖ №1] вспомнил что-то важное, но неожиданно [ПЕРСОНАЖ №2], не помня себя от испуга, ударил в предплечье врага.',
-    '[ПЕРСОНАЖ №1] поперхнулся, и за это [ПЕРСОНАЖ №2] с испугу приложил прямой удар коленом в лоб врага.',
-    '[ПЕРСОНАЖ №1] забылся, но в это время наглый [ПЕРСОНАЖ №2], приняв волевое решение, неслышно подойдя сзади, ударил.',
-    '[ПЕРСОНАЖ №1] пришел в себя, но неожиданно [ПЕРСОНАЖ №2] случайно нанес мощнейший удар.',
-    '[ПЕРСОНАЖ №1] поперхнулся, но в это время [ПЕРСОНАЖ №2] нехотя раздробил кулаком \<вырезанно цензурой\> противника.',
-    '[ПЕРСОНАЖ №1] удивился, а [ПЕРСОНАЖ №2] пошатнувшись влепил подлый удар.',
-    '[ПЕРСОНАЖ №1] высморкался, но неожиданно [ПЕРСОНАЖ №2] провел дробящий удар.',
-    '[ПЕРСОНАЖ №1] пошатнулся, и внезапно наглый [ПЕРСОНАЖ №2] беспричинно ударил в ногу противника',
-    '[ПЕРСОНАЖ №1] расстроился, как вдруг, неожиданно [ПЕРСОНАЖ №2] случайно влепил стопой в живот соперника.',
-    '[ПЕРСОНАЖ №1] пытался что-то сказать, но вдруг, неожиданно [ПЕРСОНАЖ №2] со скуки, разбил бровь сопернику.'
+    `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. -12, [88/100]`,
+    `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага.`,
+    `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил.`,
+    `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар.`,
+    `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника.`,
+    `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар.`,
+    `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар.`,
+    `${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника`,
+    `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} случайно влепил стопой в живот соперника.`,
+    `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику.`
   ];
 
-  return logs[random(logs.length) - 1];
+  return logs[random(logs.length - 1)];
 }
