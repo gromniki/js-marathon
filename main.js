@@ -1,12 +1,16 @@
-const $btn = document.querySelector('#btn-kick');
-const $btnKickEnemy = document.querySelector('#btn-kick-enemy');
+const $btn = $querySel('#btn-kick');
+const $btnKickEnemy = $querySel('#btn-kick-enemy');
+
+function $querySel(selector) {
+  return document.querySelector(selector);
+}
 
 const character = {
   name: 'Pikachu',
   defaultHP: 100,
   damageHP: 150,
-  elHP: document.querySelector('#health-character'),
-  elProgressBar: document.querySelector('#progressbar-character'),
+  elHP: $querySel('#health-character'),
+  elProgressBar: $querySel('#progressbar-character'),
   renderHPLife,
   renderProgressBarHP,
   damageLevel,
@@ -18,8 +22,8 @@ const enemy = {
   name: 'Charmander',
   defaultHP: 100,
   damageHP: 150,
-  elHP: document.querySelector('#health-enemy'),
-  elProgressBar: document.querySelector('#progressbar-enemy'),
+  elHP: $querySel('#health-enemy'),
+  elProgressBar: $querySel('#progressbar-enemy'),
   renderHPLife,
   renderProgressBarHP,
   damageLevel,
@@ -63,14 +67,14 @@ function damageLevel() {
 }
 
 function changeHP(count) {
-  if (this.damageHP < count) {
+  this.damageHP -= count;
+
+  if (this.damageHP <= 0) {
     this.damageHP = 0;
     alert('Бедный ' + this.name + ' потерпел поражение!');
     $btn.disabled = true;
-  } else {
-    this.damageHP -= count;
   }
-
+  
   this.renderHP();
 }
 
