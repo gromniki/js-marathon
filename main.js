@@ -1,14 +1,19 @@
 const $btn = $querySel('#btn-kick');
 const $btnKickEnemy = $querySel('#btn-kick-enemy');
+const $logs = $querySel('#logs');
 
 function $querySel(selector) {
   return document.querySelector(selector);
 }
 
+function $createElem(element) {
+  return document.createElement(element);
+}
+
 const character = {
   name: 'Pikachu',
   defaultHP: 100,
-  damageHP: 150,
+  damageHP: 100,
   elHP: $querySel('#health-character'),
   elProgressBar: $querySel('#progressbar-character'),
   renderHPLife,
@@ -21,7 +26,7 @@ const character = {
 const enemy = {
   name: 'Charmander',
   defaultHP: 100,
-  damageHP: 150,
+  damageHP: 100,
   elHP: $querySel('#health-enemy'),
   elProgressBar: $querySel('#progressbar-enemy'),
   renderHPLife,
@@ -55,32 +60,37 @@ function renderHP() {
 }
 
 function renderHPLife() {
-  this.elHP.textContent = this.damageLevel() + ' / ' + this.defaultHP;
+  let { defaultHP, elHP, damageLevel } = this;
+  //console.log('Это дамаг ' + damageLevel());
+  elHP.textContent = this.damageLevel() + ' / ' + defaultHP;
 }
 
 function renderProgressBarHP() {
-  let { elProgressBar, damageLevel } = this;
-  console.log(elProgressBar.style.width, damageLevel());
-  elProgressBar.style.width = damageLevel() + '%';
+  let { elProgressBar } = this;
+  // console.log(elProgressBar.style.width, damageLevel());
+  elProgressBar.style.width = this.damageLevel() + '%';
 }
 
 function damageLevel() {
   let { damageHP, defaultHP } = this;
-  console.log(damageHP, defaultHP);
+  // console.log(damageHP, defaultHP);
   return damageHP > 100 ? damageHP = 100 : Math.floor(damageHP / defaultHP * 100);
   //return this.damageHP > 100 ? this.damageHP = 100 : Math.floor(this.damageHP / this.defaultHP * 100);
 }
 
 function changeHP(count) {
+  let { name, damageHP } = this;
+  console.log('Имя - ' + name, 'Дамаг - ' + damageHP);
   this.damageHP -= count;
 
   const log = this === enemy ? generateLog(this, character) : generateLog(this, enemy);
-  console.log(log);
-  //console.log(generateLog);
+  const $p = $createElem('p');
+  $p.textContent = log;
+  $logs.insertBefore($p, $logs.children[0]);
 
   if (this.damageHP <= 0) {
     this.damageHP = 0;
-    alert('Бедный ' + this.name + ' потерпел поражение!');
+    alert('Бедный ' + name + ' потерпел поражение!');
     $btn.disabled = true;
   }
   
@@ -99,7 +109,7 @@ function generateLog(firstPerson, secondPerson) {
     `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага.`,
     `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил.`,
     `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар.`,
-    `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника.`,
+    `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезано цензурой\> противника.`,
     `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар.`,
     `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар.`,
     `${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника`,
