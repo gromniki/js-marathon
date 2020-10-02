@@ -1,12 +1,21 @@
-const $btn = document.querySelector('#btn-kick');
-const $btnKickEnemy = document.querySelector('#btn-kick-enemy');
+const $btn = $querySel('#btn-kick');
+const $btnKickEnemy = $querySel('#btn-kick-enemy');
+const $logs = $querySel('#logs');
+
+function $querySel(selector) {
+  return document.querySelector(selector);
+}
+
+function $createElem(element) {
+  return document.createElement(element);
+}
 
 const character = {
   name: 'Pikachu',
   defaultHP: 100,
   damageHP: 150,
-  elHP: document.querySelector('#health-character'),
-  elProgressBar: document.querySelector('#progressbar-character'),
+  elHP: $querySel('#health-character'),
+  elProgressBar: $querySel('#progressbar-character'),
   renderHPLife,
   renderProgressBarHP,
   damageLevel,
@@ -17,9 +26,9 @@ const character = {
 const enemy = {
   name: 'Charmander',
   defaultHP: 100,
-  damageHP: 150,
-  elHP: document.querySelector('#health-enemy'),
-  elProgressBar: document.querySelector('#progressbar-enemy'),
+  damageHP: 100,
+  elHP: $querySel('#health-enemy'),
+  elProgressBar: $querySel('#progressbar-enemy'),
   renderHPLife,
   renderProgressBarHP,
   damageLevel,
@@ -33,12 +42,10 @@ function startGame() {
   renderHP.apply(enemy);
   
   $btn.addEventListener('click', function () {
-    console.log('Kick Pikachu!');
     character.changeHP(random(20));
   });
 
   $btnKickEnemy.addEventListener('click', function () {
-    console.log('Kick Enemy!');
     enemy.changeHP(random(20));
   });
 }
@@ -51,26 +58,35 @@ function renderHP() {
 }
 
 function renderHPLife() {
-  this.elHP.textContent = this.damageLevel() + ' / ' + this.defaultHP;
+  let { defaultHP, elHP } = this;
+  elHP.textContent = this.damageLevel() + ' / ' + defaultHP;
 }
 
 function renderProgressBarHP() {
-  this.elProgressBar.style.width = this.damageLevel() + '%';
+  let { elProgressBar } = this;
+  elProgressBar.style.width = this.damageLevel() + '%';
 }
 
 function damageLevel() {
-  return this.damageHP > 100 ? this.damageHP = 100 : Math.floor(this.damageHP / this.defaultHP * 100);
+  let { damageHP, defaultHP } = this;
+  return this.damageHP > 100 ? this.damageHP = 100 : Math.floor(damageHP / defaultHP * 100);
 }
 
 function changeHP(count) {
-  if (this.damageHP < count) {
-    this.damageHP = 0;
-    alert('Бедный ' + this.name + ' потерпел поражение!');
-    $btn.disabled = true;
-  } else {
-    this.damageHP -= count;
-  }
+  let { name } = this;
+  this.damageHP -= count;
 
+  const $li = $createElem('li');
+  $li.classList.add('logs__item');
+  $li.textContent = this === enemy ? generateLog(this, character, count, this.damageHP, this.defaultHP) : generateLog(this, enemy, count, this.damageHP, this.defaultHP);
+  $logs.insertBefore($li, $logs.children[0]);
+
+  if (this.damageHP <= 0) {
+    this.damageHP = 0;
+    alert('Бедный ' + name + ' потерпел поражение!');
+    $btn.disabled = true;
+  }
+  
   this.renderHP();
 }
 
@@ -78,4 +94,21 @@ function random(max, min = 0) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
+  const logs = [
+    `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезано цензурой\> противника. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} случайно влепил стопой в живот соперника. ${count}, \[${damageHP}\/${defaultHP}\]`,
+    `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. ${count}, \[${damageHP}\/${defaultHP}\]`
+  ];
+
+  return logs[random(logs.length - 1)];
 }
