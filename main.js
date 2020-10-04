@@ -44,18 +44,11 @@ function startGame() {
   
   for (let i = 0; i < $btns.length; i++) {
     const clicks = countClicks();
-    
-    //$btns[i].addEventListener('click', () => console.log(clicks()));
 
-    
-
-    $btns[i].addEventListener('click', () => {      
+    $btns[i].addEventListener('click', function() {      
       const item = clicks();
-      if (item < 4 ) {
-        console.log(item);
-      } else {
-        console.log('Нужно заблокировать кнопку');
-      }
+      item > 0 ? console.log(item) : this.disabled = true;
+      this.textContent = ' (' + item + ')';
     });
   }
   
@@ -132,28 +125,9 @@ function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
 }
 
 function countClicks() {
-  let counter = 1;
+  let counter = 6;
 
   return function() {
-
-    // if (counter < 4) {
-    //   return counter++;
-    // } else {
-    //   console.log(this);
-    //   return $btn.disabled = true;
-    // }
-
-    return counter++;
+    return counter--;
   }
 }
-
-/*
-• Написать такую функцию, которая сможет посчитать количество кликов 
-по кнопкам в игре и выводить это количество в консоль лог.
-Напиши эту функцию используя замыкание и повесь обработчик действий на все кнопки.
-
-• После того как напишешь подсчет нажатий на кнопку, доработай функцию так, чтобы каждая кнопка имела ограниченное количество нажатий. Например, не более 6 раз.
-Это тоже делается при помощи функции замыкания.
-
-• Ну и финальный аккорд — выведи количество оставшихся нажатий на кнопку.
-*/
