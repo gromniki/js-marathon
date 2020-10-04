@@ -1,6 +1,7 @@
 const $btn = $querySel('#btn-kick');
 const $btnKickEnemy = $querySel('#btn-kick-enemy');
 const $logs = $querySel('#logs');
+const $btns = document.querySelectorAll('button');
 
 function $querySel(selector) {
   return document.querySelector(selector);
@@ -41,9 +42,25 @@ function startGame() {
   renderHP.apply(character);
   renderHP.apply(enemy);
   
+  for (let i = 0; i < $btns.length; i++) {
+    const clicks = countClicks();
+    
+    //$btns[i].addEventListener('click', () => console.log(clicks()));
+
+    
+
+    $btns[i].addEventListener('click', () => {      
+      const item = clicks();
+      if (item < 4 ) {
+        console.log(item);
+      } else {
+        console.log('Нужно заблокировать кнопку');
+      }
+    });
+  }
+  
   $btn.addEventListener('click', function () {
     character.changeHP(random(20));
-    const clicks = countClicks();
   });
 
   $btnKickEnemy.addEventListener('click', function () {
@@ -114,11 +131,19 @@ function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
   return logs[random(logs.length - 1)];
 }
 
-function countClicks (count) {
-  return function (n = 0) {
-      //count += n;
+function countClicks() {
+  let counter = 1;
 
-      console.log(count);
+  return function() {
+
+    // if (counter < 4) {
+    //   return counter++;
+    // } else {
+    //   console.log(this);
+    //   return $btn.disabled = true;
+    // }
+
+    return counter++;
   }
 }
 
@@ -128,7 +153,7 @@ function countClicks (count) {
 Напиши эту функцию используя замыкание и повесь обработчик действий на все кнопки.
 
 • После того как напишешь подсчет нажатий на кнопку, доработай функцию так, чтобы каждая кнопка имела ограниченное количество нажатий. Например, не более 6 раз.
- Это тоже делается при помощи функции замыкания.
+Это тоже делается при помощи функции замыкания.
 
 • Ну и финальный аккорд — выведи количество оставшихся нажатий на кнопку.
 */
