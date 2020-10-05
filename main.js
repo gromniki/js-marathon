@@ -1,3 +1,8 @@
+import { pokemon } from './pokemon.js';
+import random from './utils.js';
+
+console.log(pokemon);
+
 const $btn = $querySel('#btn-kick');
 const $btnKickEnemy = $querySel('#btn-kick-enemy');
 const $logs = $querySel('#logs');
@@ -94,12 +99,6 @@ function changeHP(count) {
   }
   
   this.renderHP();
-}
-
-function random(max, min = 0) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
