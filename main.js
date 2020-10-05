@@ -41,23 +41,18 @@ function startGame() {
   console.log('Start Game!');
   renderHP.apply(character);
   renderHP.apply(enemy);
-  
-  for (let i = 0; i < $btns.length; i++) {
-    const clicks = countClicks();
-
-    $btns[i].addEventListener('click', function() {      
-      const item = clicks();
-      item > 0 ? console.log(item) : this.disabled = true;
-      this.textContent = ' (' + item + ')';
-    });
-  }
+ 
+  const btnCountJolt = countClicks(6, $btn);
+  const btnCountEnemy = countClicks(9, $btnKickEnemy);
   
   $btn.addEventListener('click', function () {
     character.changeHP(random(20));
+    btnCountJolt();
   });
 
   $btnKickEnemy.addEventListener('click', function () {
     enemy.changeHP(random(20));
+    btnCountEnemy();
   });
 }
 
@@ -124,10 +119,16 @@ function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
   return logs[random(logs.length - 1)];
 }
 
-function countClicks() {
-  let counter = 6;
-
+function countClicks(counter = 6, el) {
+  const textContent = el.textContent;
+  el.textContent = `${textContent} (${counter})`;
   return function() {
-    return counter--;
+    counter--;
+    if (counter === 0) {
+      el.disabled = true;
+    }
+
+    el.textContent = `${textContent} (${counter})`;
+    return counter;
   }
 }
