@@ -1,6 +1,7 @@
 const $btn = $querySel('#btn-kick');
 const $btnKickEnemy = $querySel('#btn-kick-enemy');
 const $logs = $querySel('#logs');
+const $btns = document.querySelectorAll('button');
 
 function $querySel(selector) {
   return document.querySelector(selector);
@@ -40,13 +41,18 @@ function startGame() {
   console.log('Start Game!');
   renderHP.apply(character);
   renderHP.apply(enemy);
+ 
+  const btnCountJolt = countClicks(6, $btn);
+  const btnCountEnemy = countClicks(9, $btnKickEnemy);
   
   $btn.addEventListener('click', function () {
     character.changeHP(random(20));
+    btnCountJolt();
   });
 
   $btnKickEnemy.addEventListener('click', function () {
     enemy.changeHP(random(20));
+    btnCountEnemy();
   });
 }
 
@@ -111,4 +117,18 @@ function generateLog(firstPerson, secondPerson, count, damageHP, defaultHP) {
   ];
 
   return logs[random(logs.length - 1)];
+}
+
+function countClicks(counter = 6, el) {
+  const textContent = el.textContent;
+  el.textContent = `${textContent} (${counter})`;
+  return function() {
+    counter--;
+    if (counter === 0) {
+      el.disabled = true;
+    }
+
+    el.textContent = `${textContent} (${counter})`;
+    return counter;
+  }
 }
