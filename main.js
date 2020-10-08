@@ -1,5 +1,10 @@
 import Pokemon from './Pokemon.js';
 import { random, $querySel, renderLog } from './utils.js';
+import { pokemons } from './pokemons.js';
+
+console.log(pokemons);
+
+const $control = $querySel('.control');
 
 const pikachu = new Pokemon({
   name: 'Pikachu',
@@ -56,55 +61,3 @@ function startGame() {
 }
 
 startGame();
-
-// Lesson 8.01 - Массивы
-
-const arr = [1, 2, 3, 4];
-
-arr.push(5); // добавление элемента в конец массива
-console.log(arr);
-
-arr.unshift(0); // добавление элемента в начало массива
-console.log(arr);
-
-arr.pop(); // удаление элемента в конце массива
-console.log(arr);
-
-arr.shift(); // удаление элемента в начале массива
-console.log(arr);
-
-/*
-Особенностью методов удаления является то, что они удаляют элементы из массива и возвращают их
-в качестве результата как делают операторы.
-То есть если сохранить в переменную результат удаления, то выведется значение элемента
-*/
-const pop = arr.pop();
-console.log(pop); // 4
-
-const shift = arr.shift();
-console.log(shift); // 1
-console.log(arr);
-
-/*
-Методы добавления всегда возвращают длину массива
-*/
-let lengthArr = arr.push(4);
-console.log(lengthArr); // 3
-
-lengthArr = arr.unshift(1);
-console.log(lengthArr); // 4
-
-/*
-Есть универсальный метод для работы с массивами - splice, он
-как швейцарский нож. Легко можно удалить элементы из середины массива
-splice(index, количество элементов, );
-*/
-
-arr.splice(1, 2); // удалит элементы со значениями 2 и 3
-console.log(arr);
-
-arr.splice(0, 0, 2, 3); // 2, 3, 1, 4
-console.log(arr);
-
-arr.splice(0, 3, 1,2,3); // 1, 2, 3, 4
-console.log(arr);
