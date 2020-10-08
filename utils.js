@@ -14,9 +14,9 @@ function $createElem(element) {
   return document.createElement(element);
 }
 
-function generateLog(pikachu, charmander, count) {
-  let { name, hp: { current, total } } = pikachu;
-  let { name: nameEnemy } = charmander;
+function generateLog(player1, player2, count) {
+  let { name, hp: { current, total } } = player1;
+  let { name: nameEnemy } = player2;
 
   const logs = [
     `${name} поперхнулся, и за это ${nameEnemy} с испугу приложил прямой удар коленом в лоб врага. -${count}, \[${current}\/${total}\]`,
@@ -34,11 +34,26 @@ function generateLog(pikachu, charmander, count) {
   return logs[random(logs.length - 1)];
 }
 
-function renderLog(pikachu, charmander, count) {
+function renderLog(player1, player2, count) {
   const $li = $createElem('li');
   $li.classList.add('logs__item');
-  $li.textContent = charmander ? generateLog(charmander, pikachu, count) : generateLog(pikachu, charmander, count);
+  $li.textContent = player2 ? generateLog(player2, player1, count) : generateLog(player1, player2, count);
   $logs.insertBefore($li, $logs.children[0]);
 }
 
-export { random, $querySel, $createElem, renderLog };
+function countClicks(counter = 6, el) {
+  const textContent = el.textContent;
+  el.textContent = `${textContent} (${counter})`;
+
+  return function() {
+    counter--;
+    if (counter === 0) {
+      el.disabled = true;
+    }
+
+    el.textContent = `${textContent} (${counter})`;
+    return counter;
+  }
+}
+
+export { random, $querySel, $createElem, renderLog, countClicks };
