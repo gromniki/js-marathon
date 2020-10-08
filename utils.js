@@ -41,7 +41,7 @@ function renderLog(player1, player2, count) {
   $logs.insertBefore($li, $logs.children[0]);
 }
 
-function countClicks(counter = 6, el) {
+function countClicks(counter = 2, el) {
   const textContent = el.textContent;
   el.textContent = `${textContent} (${counter})`;
 
