@@ -40,9 +40,10 @@ body {
     position: relative;
     margin: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    flex-grow: 1;
 }
 
 .playground {
@@ -268,14 +269,15 @@ body {
 
 .button {
     position: relative;
+    max-width: 230px;
     width: 48%;
-    margin: 10px 0;
+    margin: 10px 16px;
     background: white;
     border: 2px solid #ffc55b;
     border-radius: 10px;
     min-height: 30px;
     vertical-align: middle;
-    padding: 12px 20px;
+    padding: 12px;
     outline: none !important;
     cursor: pointer;
     font-size: 18px;

@@ -60,4 +60,9 @@ function countClicks(counter = 2, el) {
   }
 }
 
-export { $querySel, $createElem, random, renderLog, countClicks };
+function removeNodeList(selectors) {
+  const domArray = document.querySelectorAll(selectors);
+  domArray.forEach($item => $item.remove());
+}
+
+export { $querySel, $createElem, random, renderLog, countClicks, removeNodeList };
