@@ -5,25 +5,18 @@ import Game from './Game.js';
 
 console.log(pokemons);
 
-const $imgPlayer1 = $querySel('.js-img-player1');
-const $imgPlayer2 = $querySel('.js-img-player2');
-const $namePlayer1 = $querySel('#name-player1');
-const $namePlayer2 = $querySel('#name-player2');
 const $control = $querySel('.control');
 
 let player1 = new Pokemon({
-  ...getPokemon(pokemons[random(pokemons.length - 1)].name),
+  ...getPokemon(),
   selectors: 'player1',
 });
 
 console.log(player1);
 
-$imgPlayer1.src = player1.image;
-$namePlayer1.textContent = player1.name;
-
 player1.attacks.forEach(item => {
   console.log(item);
-  const $btn = $createElem('button'); 
+  const $btn = $createElem('button');
   $btn.classList.add('button');
   $btn.textContent = item.name;
   const btnCount = countClicks(item.maxCount, $btn);
@@ -41,14 +34,15 @@ player1.attacks.forEach(item => {
 });
 
 let player2 = new Pokemon({
-  ...getPokemon(pokemons[random(pokemons.length - 1)].name),
+  ...getPokemon(),
   selectors: 'player2',
 });
 
 console.log(player2);
 
 function getPokemon(name) {
-  return pokemons.find((item, idx) => item.name === name);
+  return pokemons.find((item, idx) => item.name === pokemons[random(pokemons.length - 1)].name);
+  //return pokemons.find((item, idx) => item.name === name);
 }
 
 

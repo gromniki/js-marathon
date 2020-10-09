@@ -1,7 +1,6 @@
 class Selectors {
-constructor(name) {
-    this.elImg = $querySel(`.js-img-${name}`);
-    this.elName = $querySel(`#name-${name}`);
+  constructor(name) {
+    
   }
 }
 

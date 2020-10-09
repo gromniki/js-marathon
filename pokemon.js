@@ -4,6 +4,8 @@ class Selectors {
   constructor(name) {
     this.elHP = $querySel(`#health-${name}`);
     this.elProgressBar = $querySel(`#progressbar-${name}`);
+    this.elImg = $querySel(`.js-img-${name}`);
+    this.elName = $querySel(`#name-${name}`);
   }
 }
 
@@ -16,10 +18,12 @@ class Pokemon extends Selectors {
       total: hp,
     };
     this.type = type;
-    this.image = img;
+    this.img = img;
     this.attacks = attacks;
 
     this.renderHP();
+    this.renderImg();
+    this.renderName();
   }
 
   renderHP = () => {
@@ -50,6 +54,14 @@ class Pokemon extends Selectors {
     }
     
     this.renderHP();
+  }
+
+  renderImg = () => {
+    this.elImg.src = this.img;
+  }
+
+  renderName = () => {
+    this.elName.textContent = this.name;
   }
 }
 

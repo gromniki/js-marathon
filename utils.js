@@ -1,17 +1,21 @@
 const $logs = $querySel('#logs');
 
-function random(max, min = 0) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function $querySel(selector) {
   return document.querySelector(selector);
 }
 
 function $createElem(element) {
   return document.createElement(element);
+}
+
+// function renderImg() {
+//   $imgPlayer1.src = player1.image;
+// }
+
+function random(max, min = 0) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateLog(player1, player2, count) {
@@ -56,4 +60,4 @@ function countClicks(counter = 2, el) {
   }
 }
 
-export { random, $querySel, $createElem, renderLog, countClicks };
+export { $querySel, $createElem, random, renderLog, countClicks };
