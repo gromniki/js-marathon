@@ -15,7 +15,7 @@ let player1 = new Pokemon({
 console.log(player1);
 
 player1.attacks.forEach(item => {
-  console.log(item);
+  //console.log(item);
   const $btn = $createElem('button');
   $btn.classList.add('button');
   $btn.textContent = item.name;
