@@ -1,4 +1,4 @@
-import { $querySel } from './utils.js';
+import { $querySel, $createElem, removeNodeList } from './utils.js';
 
 class Selectors {
   constructor(name) {
@@ -40,17 +40,37 @@ class Pokemon extends Selectors {
     let { hp: { current, total }, elProgressBar } = this;
     const percent = current / (total / 100);
     elProgressBar.style.width = percent + '%';
+
+    if (percent < 60 && percent > 20) {
+      elProgressBar.classList.add('low');
+    } else if (percent < 20) {
+      elProgressBar.classList.add('critical');
+    }
   }
 
   changeHP = (count, $btn, cb) => {
     this.hp.current -= count;
 
     cb && cb(count);
-    
+
     if (this.hp.current <= 0) {
       this.hp.current = 0;
-      alert('Бедный ' + this.name + ' потерпел поражение!');
-      $btn.disabled = true;
+
+      const $header = $querySel('.header');
+      const $info = $createElem('h2');
+
+      $info.classList.add('info');
+      $info.textContent = `${this.name} потерпел поражение`;
+      $header.appendChild($info);
+
+      removeNodeList('.control .button');
+
+      const $control = $querySel('.control');
+      const $btnReset = $createElem('button');
+      $btnReset.classList.add('button');
+      $btnReset.textContent = 'Начать игру заново';
+
+      $control.appendChild($btnReset);
     }
     
     this.renderHP();

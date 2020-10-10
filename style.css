@@ -478,6 +478,17 @@ h1 {
     padding: 6px 0;
 }
 
+.info {
+    color: #ffffff;
+    background-color: #f1781b;
+    max-width: 600px;
+    margin: 30px auto 10px;
+    padding: 12px 20px;
+    font-size: 24px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3);
+}
+
 .logs {
     padding: 50px 0;
 }
