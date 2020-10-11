@@ -88,6 +88,7 @@ body {
 }
 
 .pokemon {
+    display: none;
     text-align: center;
     position: relative;
     width: 180px;
@@ -479,25 +480,33 @@ h1 {
 }
 
 .info {
+    display: none;
     color: #ffffff;
     background-color: #f1781b;
     max-width: 600px;
     margin: 30px auto 10px;
     padding: 12px 20px;
-    font-size: 24px;
-    border-radius: 10px;
+    border-radius: 50px;
     box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.3);
 }
 
+.info__text {
+    margin: 0;
+    font-size: 24px;
+}
+
 .logs {
+    display: none;
     padding: 50px 0;
 }
 
 .logs__wrapper {
     max-width: 900px;
+    height: 200px;
     margin: 0 auto;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
+    overflow-y: scroll;
 }
 
 .logs__list {

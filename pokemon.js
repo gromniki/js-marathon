@@ -1,4 +1,4 @@
-import { $querySel, $createElem, removeNodeList } from './utils.js';
+import { $querySel, $createElem, removeNodeList, renderResetBtn } from './utils.js';
 
 class Selectors {
   constructor(name) {
@@ -48,7 +48,7 @@ class Pokemon extends Selectors {
     }
   }
 
-  changeHP = (count, $btn, cb) => {
+  changeHP = (count, cb) => {
     this.hp.current -= count;
 
     cb && cb(count);
@@ -56,21 +56,17 @@ class Pokemon extends Selectors {
     if (this.hp.current <= 0) {
       this.hp.current = 0;
 
-      const $header = $querySel('.header');
-      const $info = $createElem('h2');
+      const $info = $querySel('.info');
+      const $text = $createElem('p');
 
-      $info.classList.add('info');
-      $info.textContent = `${this.name} потерпел поражение`;
-      $header.appendChild($info);
+      $info.style.display = 'block';
+      $text.classList.add('info__text');
+      $text.textContent = `${this.name} потерпел поражение`;
+      $info.appendChild($text);
 
       removeNodeList('.control .button');
 
-      const $control = $querySel('.control');
-      const $btnReset = $createElem('button');
-      $btnReset.classList.add('button');
-      $btnReset.textContent = 'Начать игру заново';
-
-      $control.appendChild($btnReset);
+      renderResetBtn('Начать игру заново!');
     }
     
     this.renderHP();
