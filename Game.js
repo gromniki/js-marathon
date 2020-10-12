@@ -1,5 +1,6 @@
 import Pokemon from './Pokemon.js';
 import { random, $querySel, $querySelAll, $createElem, renderLog, countClicks, removeNodeList } from './utils.js';
+import Fight from './Fight.js';
 
 class Game {
   getPokemons = async () => {
@@ -11,6 +12,10 @@ class Game {
 
   startGame = async () => {
     const pokemons = await this.getPokemons();
+
+    const fight = new Fight();
+    const randomDamage = await fight.getRandomDamage();
+    console.log(randomDamage.kick);
 
     const $control = $querySel('.control');
     const $startBtn = $querySel('.js-btn-start');
@@ -44,8 +49,9 @@ class Game {
             this.counter++; // ?
             console.log('Click ' + counter);
 
-            player2.changeHP(random(item.maxDamage, item.minDamage), (count) => renderLog(player1, player2, count));
-            player1.changeHP(random(item.maxDamage, item.minDamage), (count) => renderLog(player2, player1, count));
+            player2.changeHP(random(randomDamage.kick.player1, item.minDamage), (count) => renderLog(player1, player2, count));
+            player1.changeHP(random(randomDamage.kick.player2, item.minDamage), (count) => renderLog(player2, player1, count));
+            //player2.changeHP(random(item.maxDamage, item.minDamage), (count) => renderLog(player1, player2, count));
         
             btnCount();
           });

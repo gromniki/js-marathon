@@ -4,5 +4,5 @@ import Fight from './Fight.js';
 const game = new Game();
 game.startGame();
 
-const fight = new Fight();
-fight.randomKicks();
+// const fight = new Fight();
+// fight.randomKicks();
