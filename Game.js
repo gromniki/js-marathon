@@ -48,8 +48,8 @@ class Game {
             this.counter++; // ?
             console.log('Click ' + counter);
 
-            player2.changeHP(random(randomDamage.kick.player1, item.minDamage), (count) => renderLog(player1, player2, count));
-            player1.changeHP(random(randomDamage.kick.player2, item.minDamage), (count) => renderLog(player2, player1, count));
+            player2.changeHP(random(randomDamage.kick.player1), (count) => renderLog(player1, player2, count));
+            player1.changeHP(random(randomDamage.kick.player2), (count) => renderLog(player2, player1, count));
             //player2.changeHP(random(item.maxDamage, item.minDamage), (count) => renderLog(player1, player2, count));
         
             btnCount();
