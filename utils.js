@@ -1,17 +1,19 @@
-const $logs = $querySel('#logs');
+function $querySel(selector) {
+  return document.querySelector(selector);
+}
+
+function $querySelAll(selector) {
+  return document.querySelectorAll(selector);
+}
+
+function $createElem(element) {
+  return document.createElement(element);
+}
 
 function random(max, min = 0) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function $querySel(selector) {
-  return document.querySelector(selector);
-}
-
-function $createElem(element) {
-  return document.createElement(element);
 }
 
 function generateLog(player1, player2, count) {
@@ -35,7 +37,11 @@ function generateLog(player1, player2, count) {
 }
 
 function renderLog(player1, player2, count) {
+  const $logsWrap = $querySel('.logs');
+  const $logs = $querySel('#logs');
   const $li = $createElem('li');
+
+  $logsWrap.style.display = 'block';
   $li.classList.add('logs__item');
   $li.textContent = player2 ? generateLog(player2, player1, count) : generateLog(player1, player2, count);
   $logs.insertBefore($li, $logs.children[0]);
@@ -56,4 +62,18 @@ function countClicks(counter = 2, el) {
   }
 }
 
-export { random, $querySel, $createElem, renderLog, countClicks };
+function removeNodeList(selectors) {
+  const domArray = document.querySelectorAll(selectors);
+  domArray.forEach($item => $item.remove());
+}
+
+function renderResetBtn(nameBtn) {
+  const $control = $querySel('.control');
+  const $btnReset = $createElem('button');
+  $btnReset.classList.add('button');
+  $btnReset.textContent = nameBtn;
+  $control.appendChild($btnReset);
+  $btnReset.addEventListener('click', () => window.location.reload());
+}
+
+export { $querySel, $querySelAll, $createElem, random, renderLog, countClicks, removeNodeList, renderResetBtn };
